@@ -83,6 +83,7 @@
 <body>
 
   <!-- Top Status -->
+  <div id="debug-log" style="font-size:10px; color:#ffaa00; padding:2px 4px; border-bottom:1px dashed #ffaa00;">DBG: aguardando toque...</div>
   <div id="hud-header">
     <span id="net-status">API: OFFLINE</span>
     <span id="gps-status">GPS: --</span>
@@ -138,19 +139,42 @@
     const cardBodyEl = document.getElementById("card-body");
 
     // Padrão de botão mobile: touchstart/touchend + fallback click
+    function dbg(msg) {
+      var el = document.getElementById("debug-log");
+      if (el) el.innerText = "DBG: " + msg;
+      console.log("[bindTap]", msg);
+    }
+
     function bindTap(id, fn) {
       var el = document.getElementById(id);
-      if (!el) return;
-      var touched = false;
+      if (!el) { return; }
+      var lastFire = 0;
+      function fire(src) {
+        dbg(id + " <- " + src);
+        var now = Date.now();
+        if (now - lastFire < 500) { dbg(id + " debounced (" + src + ")"); return; }
+        lastFire = now;
+        fn();
+      }
       el.addEventListener("touchstart", function(e) {
-        e.preventDefault(); touched = true; el.classList.add("pressed");
+        dbg(id + " touchstart");
+        e.preventDefault();
+        el.classList.add("pressed");
       }, { passive: false });
       el.addEventListener("touchend", function(e) {
-        e.preventDefault(); el.classList.remove("pressed");
-        if (touched) { touched = false; fn(); }
+        e.preventDefault();
+        el.classList.remove("pressed");
+        fire("touchend");
       }, { passive: false });
-      el.addEventListener("touchcancel", function() { touched = false; el.classList.remove("pressed"); });
-      el.addEventListener("click", function() { if (!touched) fn(); });
+      el.addEventListener("touchcancel", function() {
+        dbg(id + " touchcancel");
+        el.classList.remove("pressed");
+        setTimeout(function() { fire("touchcancel-fallback"); }, 50);
+      });
+      el.addEventListener("click", function() {
+        el.classList.remove("pressed");
+        fire("click");
+      });
     }
 
     var hudAlertTimer = null;
