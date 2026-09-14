@@ -97,8 +97,11 @@ class VisionService : Service() {
     private fun startFrameLoop() {
         if (source != null) return // já rodando
 
-        // NOS ÓCULOS: trocar por CxrFrameSource(this) quando o AAR estiver plugado.
-        source = CameraXFrameSource(this, this).also { src ->
+        // NOS ÓCULOS: CxrFrameSource = Camera2 direto na câmera dos óculos
+        // (porta do GlassesCameraManager v16 — validado em produção, sem AAR).
+        // CameraXFrameSource só para desenvolvimento no celular.
+        val onGlasses = android.os.Build.MODEL.lowercase().contains("rokid")
+        source = (if (onGlasses) CxrFrameSource(this) else CameraXFrameSource(this, this)).also { src ->
             src.start { frame: Bitmap, jpegBase64: String ->
                 scope.launch {
                     handleFrame(frame, jpegBase64)
