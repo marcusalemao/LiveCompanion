@@ -1,11 +1,12 @@
 /**
  * RokidLive — Serve o client HUD (hud-bridge.html) como página HTTPS.
- * v1.0.0 — GET busca o HTML do storage público do Base44 e devolve com
+ * v1.0.1 — GET busca o HTML do storage público do Base44 e devolve com
  * content-type text/html (o link de storage serve octet-stream/download).
- * Atualizar o client = re-upload do arquivo, SEM redeploy desta function.
+ * Atualizar o client = re-upload do arquivo + trocar CLIENT_URL aqui.
+ * v1.0.1: aponta para a versão PWA (manifest fullscreen + ícone + requestFullscreen).
  */
 
-const CLIENT_URL = 'https://media.base44.com/files/public/6a11083db49430b410a8c066/802ed22a1_hud-bridge.html';
+const CLIENT_URL = 'https://media.base44.com/files/public/6a11083db49430b410a8c066/ca5964521_hud-bridge.html';
 
 Deno.serve(async (req) => {
   try {
