@@ -182,15 +182,40 @@
     }
 
     // 2. Sensores (câmera traseira do Rokid)
+    // Seleção de câmera: enumera dispositivos (enumerateDevices) e prefere a
+    // traseira (environment). Se o usuário já escolheu uma (localStorage),
+    // usa o deviceId salvo — cobre o caso Rokid-UVC e multicâmera.
+    async function getCameraConstraints() {
+      let devices = [];
+      try { devices = (await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind === "videoinput"); }
+      catch (e) { /* sem permissão ainda: enumerate volta sem labels */ }
+
+      const savedId = localStorage.getItem("rv_camera_id");
+      const saved = devices.find(d => d.deviceId === savedId);
+      if (saved) return { deviceId: { exact: saved.deviceId }, width: { ideal: 640 }, height: { ideal: 480 } };
+
+      const back = devices.find(d => /traseira|back|environment|rear/i.test(d.label));
+      if (back) return { deviceId: { exact: back.deviceId }, width: { ideal: 640 }, height: { ideal: 480 } };
+
+      return { facingMode: "environment", width: { ideal: 640 }, height: { ideal: 480 } };
+    }
+
     async function initPipeline() {
       try {
         startLocationWatch();
         cardBodyEl.innerText = "Solicitando câmera...";
 
         stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "environment", width: { ideal: 640 }, height: { ideal: 480 } },
+          video: await getCameraConstraints(),
           audio: false // TODO: chunks de áudio (STT) numa próxima fase
         });
+        // após a permissão, labels ficam visíveis: salva a câmera usada
+        const track = stream.getVideoTracks()[0];
+        try {
+          const devs = (await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind === "videoinput");
+          const chosen = devs.find(d => d.label === track.label);
+          if (chosen) localStorage.setItem("rv_camera_id", chosen.deviceId);
+        } catch (e) { /* não crítico */ }
         videoEl.srcObject = stream;
         await videoEl.play();
 
@@ -223,9 +248,16 @@
       const dataUrl = canvasEl.toDataURL("image/jpeg", 0.6);
       const frame_base64 = dataUrl.split(",")[1];
 
+      // Thumbnail 160x120 do mesmo frame — snapshot compacto para o registro de memória
+      const snapCanvas = document.createElement("canvas");
+      snapCanvas.width = 160; snapCanvas.height = 120;
+      snapCanvas.getContext("2d").drawImage(videoEl, 0, 0, 160, 120);
+      const snapshot_base64 = snapCanvas.toDataURL("image/jpeg", 0.5).split(",")[1];
+
       try {
         const resp = await apiPost(URL_FRAME, {
           frame_base64,
+          snapshot_base64,
           timestamp: new Date().toISOString(),
           lat: currentCoords.lat,
           lng: currentCoords.lng,
