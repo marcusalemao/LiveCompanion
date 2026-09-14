@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Rokid Vision Bridge — RokidLive</title>
+  <meta name="theme-color" content="#000000" />
+  <link rel="manifest" href="https://media.base44.com/files/public/6a11083db49430b410a8c066/920790ea6_manifest.json" />
+  <link rel="icon" href="https://media.base44.com/files/public/6a11083db49430b410a8c066/30f0b9a63_icon-192.png" />
   <style>
     /* Design System otimizado para Micro-OLED Waveguide (Preto = Transparente) */
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -151,6 +154,11 @@
     }
 
     var hudAlertTimer = null;
+    function enterFullscreen() {
+      var el = document.documentElement;
+      var fn = el.requestFullscreen || el.webkitRequestFullscreen;
+      if (fn) { try { fn.call(el); } catch (e) { /* ignora */ } }
+    }
     function showHudAlert(text) {
       var el = document.getElementById("hud-alert");
       if (!el) return;
@@ -341,7 +349,7 @@
     }
 
     // bind touch-safe
-    bindTap("btn-start", initPipeline);
+    bindTap("btn-start", function() { enterFullscreen(); initPipeline(); });
     bindTap("btn-stop", stopPipeline);
     bindTap("btn-ask", askMemory);
   </script>
