@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:label="RokidLive"
+        android:icon="@drawable/hud_icon"
+        android:theme="@style/Theme.RokidLive">
+
+        <!-- HUD principal: 640x480, verde fósforo sobre preto, sem scroll -->
+        <activity
+            android:name=".hud.HudActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:resizeableActivity="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Pipeline de visão: câmera 1 FPS + ingest no backend -->
+        <service
+            android:name=".vision.VisionService"
+            android:foregroundServiceType="camera"
+            android:exported="false" />
+    </application>
+</manifest>
