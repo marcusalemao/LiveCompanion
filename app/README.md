@@ -4,7 +4,8 @@ App Android (Kotlin) que roda **no próprio Android dos Rokid Glasses**, dando v
 
 ## Estado (14/09/2026)
 
-- ⚠️ **Esqueleto** — pipeline completo estruturado, câmera via CameraX (fallback de dev no celular). Captura real nos óculos = plugar CXR SDK em `CxrFrameSource.kt`.
+- ✅ **CxrFrameSource IMPLEMENTADO (14/09)** — porta do GlassesCameraManager (v16, validado em produção nos óculos, extraído por descompilação do APK). Descoberta chave: a câmera dos Rokid Glasses abre via **Camera2 API direto** — nenhum AAR proprietário necessário.
+- ⚠️ Ainda não compilado/testado — buildar no Android Studio e validar nos óculos.
 
 ## Arquitetura
 
