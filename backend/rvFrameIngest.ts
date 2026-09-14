@@ -4,7 +4,7 @@
  * POST { frame_base64, timestamp?, lat?, lng?, audio_transcript_chunk?, snapshot_base64? }
  * snapshot_base64: thumbnail 160x120 JPEG do MESMO frame (para o registro de memória).
  *
- * v1.0.1 — refresh env (nova GEMINI_API_KEY).
+ * v1.0.4 — hud_alert na resposta (confirmação instantânea no HUD, ideia do gateway Python).
  * 1. Frame-differencing: descarta frames idênticos (câmera estática)
  *    via hash do payload + intervalo mínimo entre análises (protege o budget).
  * 2. Envia o frame ao Gemini 2.5 Flash (System Prompt de visão episódica)
@@ -154,8 +154,10 @@ Deno.serve(async (req) => {
     // ---- 4. Persistência ----
     const captured_at = body.timestamp ?? new Date().toISOString();
     let savedObjects = 0;
+    const savedItems: string[] = [];
     for (const obj of (parsed.objects ?? [])) {
       if (!obj?.item_name || (obj.action !== 'pousado' && obj.action !== 'estacionado')) continue;
+      savedItems.push(String(obj.item_name));
       await db.EpisodicMemory.create({
         item_name: String(obj.item_name).slice(0, 60),
         category: ['veiculo', 'objeto_pessoal', 'documento', 'outro'].includes(obj.category)
@@ -212,10 +214,17 @@ Deno.serve(async (req) => {
       });
     } catch { /* log não bloqueia o pipeline */ }
 
+    // confirmação instantânea no HUD (ideia do gateway Python do Gemini):
+    // texto curto em MAIÚSCULAS, até ~5 palavras
+    const hud_alert = savedItems.length > 0
+      ? `SALVO: ${savedItems.map((i) => i.toUpperCase()).join(', ').slice(0, 40)}`
+      : null;
+
     return json({
       ok: true,
       analyzed: true,
       latency_ms: latency,
+      hud_alert,
       detections: {
         objects: savedObjects,
         people: savedPeople,
