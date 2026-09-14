@@ -91,6 +91,7 @@
     <div class="hud-card" id="active-card">
       <div class="title">Beto Vision</div>
       <div id="card-body">Aguardando inicialização da câmera...</div>
+    <div id="hud-alert" style="display:none; position:fixed; top:38%; left:0; right:0; text-align:center; font-size:34px; font-weight:bold; color:#00ff41; text-shadow:0 0 12px #00ff41; z-index:999; pointer-events:none; letter-spacing:2px;"></div>
     </div>
   </div>
 
@@ -147,6 +148,16 @@
       }, { passive: false });
       el.addEventListener("touchcancel", function() { touched = false; el.classList.remove("pressed"); });
       el.addEventListener("click", function() { if (!touched) fn(); });
+    }
+
+    var hudAlertTimer = null;
+    function showHudAlert(text) {
+      var el = document.getElementById("hud-alert");
+      if (!el) return;
+      el.innerText = String(text).slice(0, 48);
+      el.style.display = "block";
+      if (hudAlertTimer) clearTimeout(hudAlertTimer);
+      hudAlertTimer = setTimeout(function() { el.style.display = "none"; }, 4000);
     }
 
     async function apiPost(url, payload) {
@@ -268,6 +279,8 @@
           if (total > 0) {
             cardBodyEl.innerText = "Detectado: " + total + " evento(s) memorizado(s).";
           }
+          // Confirmação instantânea no HUD (flash grande, some em 4s)
+          if (resp.hud_alert) showHudAlert(resp.hud_alert);
           fpsCounterEl.innerText = "1 FPS | " + (resp.latency_ms || 0) + "ms";
         } else {
           // backend também faz frame-diff/rate-limit — normal
