@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ícone: visor de óculos em verde fósforo (mesma identidade do PWA Beto Vision) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp" android:height="96dp"
+    android:viewportWidth="96" android:viewportHeight="96">
+    <path android:fillColor="#000000" android:pathData="M0,0h96v96h-96z"/>
+    <path android:fillColor="#00FF66"
+        android:pathData="M12,36 h30 a11,11 0 0 1 0,22 h-30 a11,11 0 0 1 0,-22 z M54,36 h30 a11,11 0 0 1 0,22 h-30 a11,11 0 0 1 0,-22 z"/>
+    <path android:fillColor="#00FF66" android:pathData="M42,44 h12 v4 h-12 z"/>
+    <path android:fillColor="#00FF66" android:pathData="M6,38 l6,-6 M90,38 l-6,-6" android:strokeWidth="4"/>
+</vector>
