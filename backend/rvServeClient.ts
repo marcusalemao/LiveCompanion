@@ -1,12 +1,15 @@
 /**
  * RokidLive — Serve o client HUD (hud-bridge.html) como página HTTPS.
- * v1.0.1 — GET busca o HTML do storage público do Base44 e devolve com
+ * v1.0.2 — GET busca o HTML do storage público do Base44 e devolve com
  * content-type text/html (o link de storage serve octet-stream/download).
  * Atualizar o client = re-upload do arquivo + trocar CLIENT_URL aqui.
- * v1.0.1: aponta para a versão PWA (manifest fullscreen + ícone + requestFullscreen).
+ * v1.0.2: debug build — bindTap blindado (fire em touchend/click com debounce,
+ * sem gating por flag "touched" que travava) + barra DBG visível no topo pra
+ * diagnosticar por que INICIAR CAPTURA não disparava initPipeline no Chrome
+ * Android 16 / One UI 8.5 / Knox do Marcus.
  */
 
-const CLIENT_URL = 'https://media.base44.com/files/public/6a11083db49430b410a8c066/ca5964521_hud-bridge.html';
+const CLIENT_URL = 'https://media.base44.com/files/public/6a11083db49430b410a8c066/73c9a66ee_hud-bridge.html';
 
 Deno.serve(async (req) => {
   try {
