@@ -11,7 +11,7 @@
 
     <application
         android:label="RokidLive"
-        android:icon="@drawable/hud_icon"
+        android:icon="@mipmap/ic_launcher"
         android:theme="@style/Theme.RokidLive">
 
         <!-- HUD principal: 640x480, verde fósforo sobre preto, sem scroll -->
