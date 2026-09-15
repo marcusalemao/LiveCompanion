@@ -1,3 +1,77 @@
+[🇬🇧 English](#spec-en) | [🇧🇷 Português](#spec-pt-br)
+
+<a id="spec-en"></a>
+# SPEC — Rokid Vision Assistant (v1, Sep 14, 2026)
+
+Spec drafted with Gemini and validated by Marcus. This document is the product's source of truth.
+
+## Vision
+
+Full-stack "Rokid Vision Assistant" app: low-latency backend API, episodic memory module with multimodal AI, and two interfaces — **HUD Mode** (projection on Rokid glasses) and **Dashboard Mobile** (control on the smartphone).
+
+## 1. Data model (entities)
+
+| Entity | Fields | Purpose |
+|---|---|---|
+| **EpisodicMemory** | item_name, category (veiculo/objeto_pessoal/documento/outro), location_description, coordinates_lat/lng, snapshot_url (monochrome frame), captured_at | Where I left my keys, motorcycle, car, wallet |
+| **PersonInteraction** | temp_identifier, assigned_name, visual_anchors (clothes/glasses/accessories), conversation_summary, start_time, end_time | Who interacted with me and about what |
+| **DynamicSkill** | skill_name, trigger_instruction, extraction_schema (json), action_type (salvar_nota/alerta_hud/adicionar_tarefa), is_active | Voice-learned rules |
+| **HUDNotification** | title, content_type (line_art_table/metric/alert/task_item), payload (json for HUD rendering), displayed, created_at | Rendering queue for the optical display |
+
+## 2. Backend and vision pipeline (1 FPS)
+
+1. **Frame ingest** (`POST frame_base64, timestamp, lat, lng, audio_transcript_chunk?`):
+   - Frame-differencing to discard static-camera frames.
+   - Multimodal model with episodic vision System Prompt: extracts parked/parked objects (location + landmarks in JSON) and interacting people (visual anchors + summary).
+   - Auto-saves into EpisodicMemory / PersonInteraction.
+2. **DynamicSkill Engine**: "Learn to [instruction]" command → AI creates a DynamicSkill entry and generates the visual extraction rule for upcoming frames.
+3. **Voice Q&A**: "Where did I leave my key?" → looks up the latest EpisodicMemory for the item → short spoken answer + HUDNotification formatted for the optical display.
+4. **Google Workspace**: syncs tasks and events; HUD alert 15 min before appointments or when critical tasks are pending.
+
+## 3. HUD Mode interface (micro-OLED waveguide)
+
+- **100% black** background (#000000 — physical transparency on the glasses). Text/icons in **phosphor green (#00FF66)** or pure white. No gradients or grays.
+- Cards with **max 2 lines**, ultra-thin 1px borders.
+- Hollow monochrome SVG icons (keys, motorcycles, alerts, people).
+- Compact terminal/blueprint-style tables (max 2-3 columns).
+- Reminder photos with high-contrast **1-bit monochrome dithering** filter.
+- Glanceable layout: upper-right quadrant or lower-center.
+
+## 4. Companion Dashboard (smartphone)
+
+- Object memory list ("View last location" button).
+- Timeline of people and conversation summaries.
+- Skills manager (enable/disable/edit).
+- Camera connection status + 1 FPS capture toggle.
+
+---
+
+## Implementation (spec → production mapping)
+
+| Spec item | Implemented in |
+|---|---|
+| Entities | Superagent Beto backend (Base44): EpisodicMemory, PersonInteraction, DynamicSkill, HUDNotification |
+| Frame ingest | Function `rvFrameIngest` (HTTP POST; double frame-diff: client + server) |
+| DynamicSkill Engine | Function `rvLearnSkill` |
+| Voice Q&A | Function `rvAskMemory` |
+| HUD feed | Function `rvHudFeed` (poll) |
+| Dashboard data | Function `rvDashboardData` |
+| HUD Mode (web) | `hud-bridge.html` (client: getUserMedia 1 FPS + GPS + frame-diff) |
+| Dashboard Mobile | Next phase (`/dashboard`) |
+| Google Workspace | Next phase (scheduled workflow on Beto: Calendar/Tasks → HUDNotification) |
+
+Functions base URL: `https://base44.app/api/apps/6a11083db49430b410a8c066/functions/<name>`
+
+### Architecture adjustments vs. original spec
+- **No WebSocket**: the Base44 backend exposes HTTP POST only; the client sends frames via POST and receives alerts via polling (5s). Frame-differencing happens TWICE (client saves network/battery; server protects the Gemini budget).
+- **Budget**: every Gemini call is logged in AIUsageLog with cost in BRL (R$100/month cap).
+- **Rate-limit**: at most 1 Gemini analysis every 4s per instance.
+
+---
+
+[🇬🇧 English](#spec-en) | [🇧🇷 Português](#spec-pt-br)
+
+<a id="spec-pt-br"></a>
 # SPEC — Rokid Vision Assistant (v1, 14/09/2026)
 
 Spec elaborada com Gemini e validada por Marcus. Este documento é a fonte da verdade do produto.
