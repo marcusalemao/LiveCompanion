@@ -1,6 +1,6 @@
 # Live Companion
 
-Assistente multimodal para óculos Rokid: vê o que eu vejo via streaming, conversa sobre tudo, lembra onde deixei chaves, carro, moto ou bicicleta — e me lembra das minhas tarefas e eventos do Google.
+Assistente multimodal para óculos Rokid: vê o que eu vejo via streaming, conversa sobre tudo, lembra onde deixei chaves, carro, moto ou bicicleta, com quem e sobre o que conversei — e me lembra das minhas tarefas e eventos.
 
 ## Por que este projeto existe
 
