@@ -1,5 +1,8 @@
 # Live Companion
 
+<p align="center"><img src="https://raw.githubusercontent.com/marcusalemao/LiveCompanion/main/icons/icon-512.png" width="130" alt="Live Companion"/></p>
+
+
 [🇧🇷 Português](#live-companion-pt-br) | [🇬🇧 English](#live-companion-en)
 
 ---
