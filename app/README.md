@@ -1,4 +1,61 @@
-# Rokid Vision Assistant — APK nativo (esqueleto v0.1)
+[🇬🇧 English](#apk-en) | [🇧🇷 Português](#apk-pt-br)
+
+<a id="apk-en"></a>
+# Rokid Vision Assistant — Native APK (skeleton v0.1) (English)
+
+Android app (Kotlin) that runs **on the Rokid Glasses' own Android**, giving Beto continuous vision and episodic memory. Cable mirroring was discarded (the Rokid Glasses have no video input — only the Rokid Max do).
+
+## Status (Sep 14, 2026)
+
+- ✅ **CxrFrameSource IMPLEMENTED (Sep 14)** — port of GlassesCameraManager (v16, validated in production on the glasses, extracted by decompiling the APK). Key finding: the Rokid Glasses camera opens via the **Camera2 API directly** — no proprietary AAR needed.
+- ⚠️ Not yet compiled/tested — build in Android Studio and validate on the glasses.
+
+## Architecture
+
+```
+hud/HudActivity.kt        640x480 phosphor-green HUD, no scroll, KeyEvents
+vision/VisionService.kt  Foreground service: 1 FPS loop → diff → ingest
+vision/FrameDiff.kt      Frame-differencing (port of the validated HTML client)
+vision/FrameSource.kt     Interface — CameraX (dev) ↔ CXR SDK (glasses)
+api/ApiClient.kt          POST to the Base44 endpoints (all already live)
+```
+
+## Endpoints (backend validated Sep 14)
+
+| Endpoint | Purpose |
+|---|---|
+| `rvFrameIngest` | 640x480 JPEG b64 frame + 160x120 snapshot + GPS → Gemini → EpisodicMemory |
+| `rvAskMemory` | "where did I leave the key?" → short answer + HUDNotification |
+| `rvHudFeed` | notifications poll for the HUD |
+
+No header auth (CORS open); the Gemini key stays server-side.
+
+## Flow
+
+1. `HudActivity` opens → starts `VisionService` (foreground, camera type)
+2. 1 FPS loop: frame → **local diff** (static scene never leaves the device) → 4s gate (backend limit) → POST
+3. `hud_alert` from the response → broadcast → HUD shows it for 4s
+4. Poll `rvHudFeed` every 5s for persisted notifications (answered questions etc.)
+
+## Interaction on the glasses (by project definition)
+
+- **KeyEvents only** — no touch. Map real keycodes in `HudActivity.onKeyDown`
+- 640x480 HUD, phosphor green `#00FF66` on black, no scroll (truncates 180 chars)
+- Short answers; long detail goes to WhatsApp (standard glasses flow)
+
+## Next steps
+
+1. Plug in the CXR SDK (`app/libs/cxr-sdk.aar` → `CxrFrameSource.kt`) — reference: RokidPhone
+2. Map the glasses' physical keycodes in `onKeyDown`
+3. "oi Beto" wake word (offline) — dedicated module after capture works
+4. Audio: chunks → STT → `audio_transcript_chunk` (field already accepted by ingest)
+
+---
+
+[🇬🇧 English](#apk-en) | [🇧🇷 Português](#apk-pt-br)
+
+<a id="apk-pt-br"></a>
+# Rokid Vision Assistant — APK nativo (esqueleto v0.1) (Português)
 
 App Android (Kotlin) que roda **no próprio Android dos Rokid Glasses**, dando visão contínua e memória episódica ao Beto. Espelhamento por cabo foi descartado (os Rokid Glasses não têm entrada de vídeo — só os Rokid Max têm).
 
