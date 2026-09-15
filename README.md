@@ -14,7 +14,7 @@ A multimodal assistant for Rokid smart glasses: it sees what I see via streaming
 
 ### Links
 
-- **Live demo (web app):** https://live-companion.base44.app — sign-in required; access on request (approved by the author).
+- **Live demo (web app):** https://visualcontext.base44.app — sign-in required; access on request (approved by the author).
 - **Android APK (glasses app):** will be published in [GitHub Releases](https://github.com/marcusalemao/VisualContext/releases) when ready.
 - **License:** custom source-available (see [LICENSE](LICENSE)) — commercial use requires written permission.
 
@@ -93,7 +93,7 @@ Assistente multimodal para óculos Rokid: vê o que eu vejo via streaming, conve
 
 ### Links
 
-- **Demo ao vivo (web app):** https://live-companion.base44.app — requer login; acesso sob pedido (aprovado pelo autor).
+- **Demo ao vivo (web app):** https://visualcontext.base44.app — requer login; acesso sob pedido (aprovado pelo autor).
 - **APK Android (app dos óculos):** será publicado em [GitHub Releases](https://github.com/marcusalemao/VisualContext/releases) quando estiver pronto.
 - **Licença:** source-available customizada (ver [LICENSE](LICENSE)) — uso comercial exige permissão por escrito.
 
