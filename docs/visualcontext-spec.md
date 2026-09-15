@@ -1,9 +1,9 @@
 [🇬🇧 English](#lc-spec-en) | [🇧🇷 Português](#lc-spec-pt-br)
 
 <a id="lc-spec-en"></a>
-# Live Companion Spec (English)
+# VisualContext Spec (English)
 
-Update the full-stack application to the official name "Live Companion".
+Update the full-stack application to the official name "VisualContext".
 The app acts as a continuous, modular multimodal assistant for the Rokid Glasses (via HUD Mode) and is controlled through the Dashboard Mobile on the smartphone.
 
 ### 1. DATA MODEL (ENTITIES)
@@ -59,9 +59,9 @@ The people pipeline must NOT depend on facial recognition to work. Mandatory fal
 [🇬🇧 English](#lc-spec-en) | [🇧🇷 Português](#lc-spec-pt-br)
 
 <a id="lc-spec-pt-br"></a>
-# Spec Live Companion (Português)
+# Spec VisualContext (Português)
 
-Atualize a aplicação full-stack para o nome oficial "Live Companion".
+Atualize a aplicação full-stack para o nome oficial "VisualContext".
 O aplicativo atua como um assistente multimodal contínuo e modular para os óculos Rokid Glasses (via HUD Mode) e controle via Dashboard Mobile no smartphone.
 
 ### 1. MODELO DE DADOS (ENTIDADES)

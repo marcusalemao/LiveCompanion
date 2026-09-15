@@ -1,7 +1,7 @@
 [🇬🇧 English](#architecture-en) | [🇧🇷 Português](#arquitetura-pt-br)
 
 <a id="architecture-en"></a>
-# Architecture — Live Companion
+# Architecture — VisualContext
 
 > Version 1.1 — pipeline in production (Sep/2026). The full product spec is in [SPEC.md](SPEC.md).
 
@@ -57,7 +57,7 @@ Public functions at `https://base44.app/api/apps/6a11083db49430b410a8c066/functi
 [🇬🇧 English](#architecture-en) | [🇧🇷 Português](#arquitetura-pt-br)
 
 <a id="arquitetura-pt-br"></a>
-# Arquitetura — Live Companion
+# Arquitetura — VisualContext
 
 > Versão 1.1 — pipeline em produção (set/2026). A spec de produto completa está em [SPEC.md](SPEC.md).
 

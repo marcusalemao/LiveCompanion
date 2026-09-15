@@ -1,21 +1,21 @@
-# Live Companion
+# VisualContext
 
-<p align="center"><img src="https://raw.githubusercontent.com/marcusalemao/LiveCompanion/main/icons/icon-512.png" width="130" alt="Live Companion"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/marcusalemao/VisualContext/main/icons/icon-512.png" width="130" alt="VisualContext"/></p>
 
 
-[🇧🇷 Português](#live-companion-pt-br) | [🇬🇧 English](#live-companion-en)
+[🇧🇷 Português](#visual-context-pt-br) | [🇬🇧 English](#visual-context-en)
 
 ---
 
-<a id="live-companion-en"></a>
-## Live Companion (English)
+<a id="visual-context-en"></a>
+## VisualContext (English)
 
 A multimodal assistant for Rokid smart glasses: it sees what I see via streaming, talks about anything, remembers where I left my keys, car or bike, who I talked to and what about — and reminds me of my tasks and events.
 
 ### Links
 
 - **Live demo (web app):** https://live-companion.base44.app — sign-in required; access on request (approved by the author).
-- **Android APK (glasses app):** will be published in [GitHub Releases](https://github.com/marcusalemao/LiveCompanion/releases) when ready.
+- **Android APK (glasses app):** will be published in [GitHub Releases](https://github.com/marcusalemao/VisualContext/releases) when ready.
 - **License:** custom source-available (see [LICENSE](LICENSE)) — commercial use requires written permission.
 
 
@@ -78,7 +78,7 @@ Tested on Samsung Galaxy Z Fold / Rokid (Android 16, One UI 8.5, Knox 3.13):
 
 **Phase 0 — app skeleton.** Public repository under a custom source-available license (commercial use requires the author's written permission).
 
-Official name decided on 2026-09-15: **Live Companion** (formerly RokidLive). Official product spec in [docs/live-companion-spec.md](docs/live-companion-spec.md).
+Official name: **VisualContext** (formerly RokidLive, briefly Live Companion) — renamed 2026-09-15. Official product spec in [docs/visualcontext-spec.md](docs/visualcontext-spec.md).
 
 ### Related
 
@@ -86,15 +86,15 @@ Official name decided on 2026-09-15: **Live Companion** (formerly RokidLive). Of
 
 ---
 
-<a id="live-companion-pt-br"></a>
-## Live Companion (Português)
+<a id="visual-context-pt-br"></a>
+## VisualContext (Português)
 
 Assistente multimodal para óculos Rokid: vê o que eu vejo via streaming, conversa sobre tudo, lembra onde deixei chaves, carro, moto ou bicicleta, com quem e sobre o que conversei — e me lembra das minhas tarefas e eventos.
 
 ### Links
 
 - **Demo ao vivo (web app):** https://live-companion.base44.app — requer login; acesso sob pedido (aprovado pelo autor).
-- **APK Android (app dos óculos):** será publicado em [GitHub Releases](https://github.com/marcusalemao/LiveCompanion/releases) quando estiver pronto.
+- **APK Android (app dos óculos):** será publicado em [GitHub Releases](https://github.com/marcusalemao/VisualContext/releases) quando estiver pronto.
 - **Licença:** source-available customizada (ver [LICENSE](LICENSE)) — uso comercial exige permissão por escrito.
 
 
@@ -157,7 +157,7 @@ Testado em Samsung Galaxy Z Fold / Rokid (Android 16, One UI 8.5, Knox 3.13):
 
 **Fase 0 — esqueleto do app.** Repositório público sob licença source-available customizada (uso comercial exige permissão por escrito do autor).
 
-Nome oficial decidido em 15/09/2026: **Live Companion** (ex-RokidLive). Spec oficial de produto em [docs/live-companion-spec.md](docs/live-companion-spec.md).
+Nome oficial: **VisualContext** (ex-RokidLive, brevemente Live Companion) — renomeado em 15/09/2026. Spec oficial de produto em [docs/visualcontext-spec.md](docs/visualcontext-spec.md).
 
 ### Relacionados
 
