@@ -10,8 +10,20 @@ O Vision AI nativo dos Rokid é rápido (câmera + reconhecimento imediato), mas
 
 - **Vê comigo**: streaming constante da câmera dos óculos quando ativado.
 - **Conversa sobre tudo**: perguntas por voz, respostas curtas no visor + TTS.
-- **Lembra do meu dia**: onde deixei chaves/carro/moto, o que vi durante o dia.
+- **Lembra dos meus objetos**: onde deixei chaves, carro, moto, carteira, documentos.
+- **Lembra dos lugares**: por onde passei no dia — o café, a reunião naquele andar, a loja.
+- **Lembra das pessoas**: com quem conversei e o resumo da conversa — acordos, tópicos e pendências. Funciona MESMO sem reconhecimento facial: a interação fica identificada por âncoras visuais transitórias (ex: "Pessoa 1, casaco vermelho, 11:43, Av. Paulista") + horário + local + resumo do que foi falado.
 - **Agenda**: lembretes das minhas tarefas e eventos do Google.
+
+## Três tipos de memória
+
+| Tipo | Entidade | Exemplo |
+|------|----------|---------|
+| Objetos | `EpisodicMemory` (objeto_pessoal, veiculo, documento) | "Chaves no bolso da jaqueta cinza, em casa, 8h10" |
+| Lugares | `EpisodicMemory` (lugar) + coordenadas | "Reunião no 7º andar do edifício X, 14h" |
+| Pessoas | `PersonInteraction` | "Pessoa 1, casaco vermelho, 11:43, Av. Paulista — falamos do orçamento, ficou de mandar proposta até sexta" |
+
+A memória de pessoas **não depende de reconhecimento facial**: cada interação ganha um identificador temporário (`temp_identifier`), âncoras visuais (`visual_anchors`: roupa, óculos, acessórios), janela de tempo (`start_time`/`end_time`) e resumo da conversa (`conversation_summary`). Se o rosto for reconhecido depois (via Vision), a interação é ligada à pessoa permanente.
 
 ## Arquitetura (visão de alto nível)
 
@@ -41,7 +53,7 @@ Testado em Samsung Galaxy Z Fold / Rokid (Android 16, One UI 8.5, Knox 3.13):
 - [ ] Fase 1 — Captura de câmera local nos óculos (sem touch, via KeyEvent)
 - [ ] Fase 2 — Envio de frames ao servidor (buffer circular, WebSocket)
 - [ ] Fase 3 — Integração com o assistente (API Base44, memória persistente)
-- [ ] Fase 4 — Memória do dia: onde deixei chaves/carro/moto
+- [ ] Fase 4 — Memória do dia: objetos (chaves/carro/moto), lugares visitados e interações com pessoas (âncoras visuais + resumo da conversa, sem depender de reconhecimento facial)
 - [ ] Fase 5 — Tarefas e eventos do Google (lembretes)
 - [ ] Fase 6 — Tethering via Galaxy Watch 7 Pro (rede própria)
 

@@ -38,3 +38,13 @@ O aplicativo atua como um assistente multimodal contínuo e modular para os ócu
   - payload (json: dados estruturados para renderização ótica)
   - displayed (boolean, default false)
   - created_at (timestamp)
+
+### Adição (15/09/2026, a pedido do Marcus): memória sem reconhecimento facial
+
+O pipeline de pessoas NÃO deve depender de reconhecimento facial para funcionar. Fallback obrigatório em `PersonInteraction`:
+
+- `temp_identifier`: "Pessoa 1", "Pessoa 2"… numeradas por sessão.
+- `visual_anchors`: características transitórias — "casaco vermelho, óculos redondo, mochila preta".
+- Local + janela de tempo no resumo: "11:43, Av. Paulista" (`start_time`/`end_time` + localização da sessão em `audio_context` ou descrição).
+- `conversation_summary`: tópicos, acordos e pendências extraídos do áudio.
+- Se o reconhecimento facial (repo Vision) identificar a pessoa depois, o campo `assigned_name` é preenchido e a interação é ligada ao perfil permanente.
