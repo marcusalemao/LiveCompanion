@@ -1,4 +1,4 @@
-# Arquitetura — RokidLive
+# Arquitetura — Live Companion
 
 > Versão 1.1 — pipeline em produção (set/2026). A spec de produto completa está em [SPEC.md](SPEC.md).
 

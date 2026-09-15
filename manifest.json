@@ -1,7 +1,7 @@
 {
-  "name": "Beto Vision — Rokid HUD",
-  "short_name": "Beto Vision",
-  "description": "Streaming de visão e memória episódica para os óculos Rokid (RokidLive)",
+  "name": "Live Companion — Rokid HUD",
+  "short_name": "Live Companion",
+  "description": "Assistente multimodal contínuo para os óculos Rokid: visão, memória episódica e conversa (Live Companion)",
   "lang": "pt-BR",
   "start_url": ".",
   "scope": ".",
