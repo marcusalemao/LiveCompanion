@@ -1,4 +1,4 @@
-# RokidLive
+# Live Companion
 
 Assistente multimodal para óculos Rokid: vê o que eu vejo via streaming, conversa sobre tudo, lembra onde deixei chaves, carro, moto ou bicicleta — e me lembra das minhas tarefas e eventos do Google.
 
@@ -49,6 +49,9 @@ Testado em Samsung Galaxy Z Fold / Rokid (Android 16, One UI 8.5, Knox 3.13):
 
 **Fase 0 — esqueleto do app.** Repositório privado.
 
+Nome oficial decidido em 15/09/2026: **Live Companion** (ex-RokidLive). Spec oficial de produto em [docs/live-companion-spec.md](docs/live-companion-spec.md).
+
 ## Relacionados
 
-- [facecontext](https://github.com/marcusalemao/facecontext) — backend de pessoas/encontros usado pelo assistente.
+- [Vision](https://github.com/marcusalemao/Vision) (ex-facecontext) — emulador AR / reconhecimento facial.
+- [rokid-livestream](https://github.com/marcusalemao/rokid-livestream) — experimento de streaming constante câmera → servidor → assistente.
